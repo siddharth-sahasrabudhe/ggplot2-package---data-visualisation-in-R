@@ -1,0 +1,97 @@
+---
+title: "Understanding grammar of graphics design philosophy of ggplot2 package"
+author: "Siddharth"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+`ggplot2` is most popular package for data visualization. This package is part of tidyverse family of packages.
+
+```{r}
+
+library(tidyverse)
+```
+
+`ggplot2` layout is based on Grammar of Graphics Design philosophy. Each graph gets created using set of independent components called layers, that can be composed in many different ways.
+
+The main layers are:
+
+-   The dataset layer
+
+-   The aesthetic layer
+
+-   The geometric object layer
+
+-   If needed, additional layers (such as labels, annotations, scales, axis ticks, legends, themes, facets, etc.) can be added to personalize the plot.
+
+## Load the data
+
+```{r}
+
+view(diamonds)
+ 
+```
+
+## Create the ggplot, data and aesthetic layers
+
+```{r}
+
+ggplot(data=diamonds) +
+  aes(x = carat, y = price)
+ 
+```
+
+## Create geometric objects
+
+```{r}
+
+ggplot(data=diamonds) +
+  aes(x = carat, y = price) +
+  geom_point()
+   
+```
+
+## Use color aesthetic
+
+```{r}
+
+ggplot(data=diamonds) +
+  aes(x = carat, y = price, color=cut) +
+  geom_point()
+
+```
+
+## Create layer for axis labels and graph title
+
+```{r}
+
+ggplot(data=diamonds) +
+  aes(x = carat, y = price, color=cut) +
+  geom_point() +
+  labs(x= "diamond_weight" ,y = "diamond_price", title = "diamond weight Vs Price")
+
+```
+
+## Create layer for generating sub-plot
+
+```{r}
+
+ggplot(data=diamonds) +
+  aes(x = carat, y = price) +
+  geom_point() +
+  labs(x= "diamond_weight" ,y = "diamond_price", title = "diamond weight Vs Price") +
+  facet_wrap(~cut)
+
+```
+
+## Summary:
+
+-   `ggplot2` layout is based on Grammar of Graphics Design philosophy. Each graph gets created using set of independent components called layers, that can be composed in many different ways.
+
+-   The three layers are mandatory to create any chart in ggplot2 package
+
+    -   dataset layer
+
+    -   aesthetic layer
+
+    -   geometric object layer
