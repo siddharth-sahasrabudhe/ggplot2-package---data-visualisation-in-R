@@ -1,0 +1,92 @@
+---
+title: "Making scatter plot in ggplot2"
+author: "Siddharth"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+## Load the Data-set and tidyverse library
+
+```{r}
+
+library(tidyverse)
+
+movies <- read.csv("E:\\Training Modules\\ggplot package\\scatter plots\\IMDB Movies.csv")
+
+#movies <- read.csv("https://raw.githubusercontent.com/siddharth-sahasrabudhe/ggplot2-package---data-visualisation-in-R/main/IMDB%20Movies.csv")
+
+
+
+```
+
+## View the data
+
+```{r}
+
+view(movies)
+
+movies %>% colnames()
+
+```
+
+## Generate the scatter plot
+
+```{r}
+
+ggplot(data=movies)+
+  aes(x=Duration..min.,y=Gross.Revenue)+
+  geom_point()+
+  theme_light()
+  
+
+```
+
+## Use transparency option to remove overplotting
+
+```{r}
+ggplot(data=movies)+
+  aes(x=Duration..min.,y=Gross.Revenue)+
+  geom_point(alpha=0.2)+
+  theme_light()
+
+```
+
+## Use jitter argument to remove overplotting
+
+```{r}
+
+ggplot(data=movies)+
+  aes(x=Duration..min.,y=Gross.Revenue)+
+  geom_jitter()+
+  theme_light()
+
+```
+
+## Add smooth line to check the trend in the data
+
+```{r}
+ggplot(data=movies)+
+  aes(x=Duration..min.,y=Gross.Revenue)+
+  geom_jitter()+
+  theme_light()+
+  geom_smooth(method="lm",se=FALSE)
+
+```
+
+## Check correlation using Pearson's correlation
+
+```{r}
+
+movies %>%
+  {(cor(.$Gross.Revenue,.$Duration..min.,use="complete.obs"))}
+```
+
+## Summary:
+
+-   Scatter plot is used to visualize the relationship between two numeric variable
+
+-   `geom jitter()` adds a little random noise to the data which can help avoid overplotting.
+
+-   `geom_smooth()` adds a trend line to scatter plot
+
+-   Using `alpha` parameter we can change the transparency of the points which help avoid overplotting
