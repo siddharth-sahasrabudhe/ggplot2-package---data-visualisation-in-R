@@ -1,0 +1,77 @@
+---
+title: "How to create Bar chart using ggplot2 package"
+author: "Siddharth"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+## Load the data-set
+
+```{r}
+head(IMDB_Movies)
+
+```
+
+## Create bar chart
+
+```{r}
+ggplot(data=IMDB_Movies)+
+  aes(x=Genre)+
+  geom_bar(stat="count")
+
+```
+
+## Create bar chart for revenue
+
+```{r}
+IMDB_Movies %>%
+  group_by(Genre) %>%
+  summarise(total_revenue = sum(`Gross Revenue`))%>%
+  mutate(total_revenue = round((total_revenue*10^-6),2),
+         Genre = factor(Genre))%>%
+  ggplot()+
+  aes(x=fct_reorder(Genre,total_revenue),y=total_revenue,)+
+  geom_bar(stat="identity")+
+  geom_text(aes(label = total_revenue), vjust = -0.5, colour = "red")
+
+```
+
+## Create bar chart data labels
+
+```{r}
+IMDB_Movies %>%
+  group_by(Genre) %>%
+  summarise(total_revenue = sum(`Gross Revenue`))%>%
+   mutate(total_revenue = round((total_revenue*10^-6),2))%>%
+  ggplot()+
+  aes(x=Genre,y=total_revenue)+
+  geom_bar(stat="identity")+
+  geom_text(aes(label = total_revenue), vjust = -0.5, colour = "red")
+
+
+```
+
+## Display bar chart in descending order
+
+```{r}
+IMDB_Movies %>%
+  group_by(Genre) %>%
+  summarise(total_revenue = sum(`Gross Revenue`))%>%
+   mutate(total_revenue = round((total_revenue*10^-6),2),
+          Genre=factor(Genre))%>%
+  ggplot()+
+  aes(x=fct_reorder(Genre,total_revenue),Genre,y=total_revenue)+
+  geom_bar(stat="identity")+
+  geom_text(aes(label = total_revenue), hjust = -0.2, colour = "red")+
+  coord_flip()+
+  theme_bw()
+
+```
+
+## Summary:
+
+bar chart is created using statistical transformations. stat="count" transformation is used to count the number of observations in the data set for particular category. stat="identity" transformation is used when raw observations are used in bar chart.
+
+the bar chart should be displayed either in ascending or in descending order of the values. The ordering can be changed by converting categorical variable into factor
+
+the axis of bar chart can be interchanged using coord_flip() method
