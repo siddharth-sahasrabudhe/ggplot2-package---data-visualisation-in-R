@@ -1,0 +1,142 @@
+---
+title: "Stacked bar charts using ggplot function"
+author: "Siddharth"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+### What is stacked bar chart?
+
+Stacked bar charts usually represent a series of bars or columns stacked on top of one another. They are widely used to effectively portray comparisons of total values across several categories.
+
+We will use titanic data-set to carry out EDA using stacked bar chart We will try to find out the answers to following questions:
+
+-   Out of total male and female passengers on the Titanic ship, how many of them are survived?
+
+-   Does survival rate of passengers has any bearing on its socio-economic class?
+
+-   What is survival percentage of male and female passengers?
+
+-   What is survival percentage of passengers based on socio-economic class?
+
+### Load the Data-set:
+
+```{r}
+
+library(tidyverse)
+
+titanic_df <- read.csv("titanic.csv")
+
+# titanic_df <- read.csv("https://raw.githubusercontent.com/siddharth-sahasrabudhe/ggplot2-package---data-visualisation-in-R/main/titanic.csv")
+
+head(titanic_df)
+
+```
+
+### Prepare data transformation:
+
+```{r}
+
+titanic_df1 <- titanic_df %>%
+  select(Survived,Pclass,Sex)%>%
+  mutate(Survived = factor(Survived,
+                           levels=c(0,1),
+                           labels=c("Not survived","survived")))%>%
+    mutate(Pclass = factor(Pclass,
+                           levels=c(1,2,3),
+                           labels=c("First class","second class","third class")))%>%
+  mutate(Sex=factor(Sex))%>%
+  view
+  
+
+```
+
+### Generate the Factor summary:
+
+```{r}
+
+titanic_df1 %>%
+  map(fct_count)
+
+```
+
+### Prepare contingency table:
+
+```{r}
+
+con_gender <- data.frame(table(titanic_df1$Sex,titanic_df1$Survived))%>%
+  view
+
+con_pclass <- data.frame(table(titanic_df1$Pclass,titanic_df1$Survived))%>%
+  view
+
+```
+
+## Question #1:
+
+### Out of total male and female passengers on the Titanic ship, how many of them are survived?
+
+```{r}
+
+ggplot(data=con_gender)+
+  aes(x=Var1,y=Freq,fill=Var2)+
+  geom_col(color="black",position = "stack")+
+  geom_text(aes(label=Freq),size=5,position = position_stack(vjust=0.5))+
+  scale_fill_brewer(palette = "Pastel1")
+
+  
+
+```
+
+## Question #2:
+
+### What is survival rate of passengers as per their socio-economic status?
+
+```{r}
+
+ggplot(data=con_pclass)+
+  aes(x=Var1,y=Freq,fill=Var2)+
+  geom_col(color="black",position = "stack")+
+  geom_text(aes(label=Freq),size=5,position = position_stack(vjust=0.5))+
+  scale_fill_brewer(palette = "Pastel1")
+
+```
+
+## Question #3:
+
+### What is survival percentage of different passenger classes?
+
+```{r}
+
+ggplot(data=con_pclass)+
+  aes(x=Var1,y=Freq,fill=Var2)+
+  geom_col(color="black",position = "fill")+
+  scale_y_continuous(labels = scales::percent)+
+  scale_fill_brewer(palette = "Pastel1")
+
+```
+
+## Question #4:
+
+### What is survival percentage of Male and Female passengers?
+
+```{r}
+
+ggplot(data=con_gender)+
+  aes(x=Var1,y=Freq,fill=Var2)+
+  geom_col(color="black",position = "fill")+
+  scale_y_continuous(labels = scales::percent)+
+  scale_fill_brewer(palette = "Pastel1")
+```
+
+### Summary:
+
+-   Stacked bar charts usually represent a series of bars or columns stacked on top of one another. They are widely used to effectively portray comparisons of total values across several categories.
+
+-   Use statistical transformation - position = "stack" for creating stacked bar chart.
+
+-   Proportionate stacked bar chart shows relative proportions for each category standardized to 100% scale.
+
+-   Use statistical transformation - position = "fill" for creating proportionate stacked bar chart.
+
+-   contingency table is in matrix format that generates multivariate frequency distribution of the variables.
