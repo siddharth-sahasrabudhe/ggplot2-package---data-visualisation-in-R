@@ -1,0 +1,81 @@
+---
+title: "histogram and density plot"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+### What is Histogram?
+Histograms are graphs of a distribution of single continuous variable designed to show centering, dispersion (spread), and shape (relative frequency) of the data. Histograms can provide a visual display of large amounts of data that are difficult to understand in a tabular, or spreadsheet form. 
+
+## Load the library and data set
+
+```{r}
+
+library(tidyverse)
+library(datasets)
+
+head(rivers)
+
+df_rivers <- data.frame(rivers)%>% view
+```
+
+## Create histogram for `rivers` variable
+
+```{r}
+ggplot(data=df_rivers)+
+  aes(x=rivers)+
+  geom_histogram(fill="white",color="black")+
+  geom_vline(xintercept = mean(df_rivers$rivers),lwd=1,linetype=2,color="red")
+
+```
+
+## Create frequency polygon
+
+```{r}
+ggplot(data=df_rivers)+
+  aes(x=rivers)+
+  geom_histogram(fill="white",color="black")+
+  geom_vline(xintercept = mean(df_rivers$rivers),lwd=1,linetype=2,color="red")+
+  geom_freqpoly(color="blue",lwd=1)
+
+```
+
+## Load the data set
+
+```{r}
+head(geyser)
+```
+
+## Create histogram for `duration` variable
+
+
+```{r}
+ggplot(data=geyser)+
+  aes(x=duration)+
+  geom_histogram(color="black",fill="white",binwidth = 0.25,boundary=2)+
+  geom_vline(xintercept = mean(geyser$duration),lwd=1,color="red",linetype=2)
+
+```
+
+## Create Frequency polygon
+
+```{r}
+ggplot(data=geyser)+
+  aes(x=duration)+
+  geom_histogram(color="black",fill="white",binwidth = 0.25,boundary=2)+
+  geom_vline(xintercept = mean(geyser$duration),lwd=1,color="red",linetype=2)+
+  geom_freqpoly(color="blue",lwd=1,binwidth=0.25,boundary=2)
+```
+
+### Summary:
+  - Histograms are graphs of a distribution of single continuous variable designed to show centering, dispersion        (spread),and shape (relative frequency) of the data.
+  
+  - Histograms are created using `geom_histogram` geometric object. 
+  
+  -  Histogram divides the x-axis into bins and counting the number of observations in each bin.
+  
+  - By default,number of bins are 30, but it can be changed using `binwidth` argument 
+  
+  - `boundry` argument is used to specify the bin position
+  
+  - `geom_density` geometric object is used to draw smooth curves to show the general shape of the                      distribution
