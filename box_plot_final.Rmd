@@ -1,0 +1,57 @@
+---
+title: "How to create Box Plot and Violine Plot using ggplot2 package?"
+author: "Siddharth"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+### Load the `housing price` data-set
+
+```{r}
+library(tidyverse)
+housing_price <- read.csv("homeprices.csv")
+head(housing_price)
+```
+
+### The Box-Whisker Plot for single variable
+
+```{r}
+ggplot(data=housing_price)+
+  aes(x=factor(Bedrooms),y=Sale.price)+
+  geom_boxplot()
+```
+
+### The grouped Box-Whisker Plot 
+
+```{r}
+ggplot(data=housing_price)+
+  aes(x=interaction(factor(Bedrooms),factor(Year.built)),y=Sale.price)+
+  geom_boxplot()
+```
+
+### The Violine plot
+
+```{r}
+ggplot(data=housing_price)+
+  aes(x=factor(Bedrooms),y=Sale.price)+
+  geom_violin()
+```
+
+### The Violine plot overlaid with Box-Whisker plot
+
+```{r}
+ggplot(data=housing_price)+
+  aes(x=factor(Bedrooms),y=Sale.price)+
+  geom_violin()+
+  geom_boxplot(width=0.1,fill="black")+
+  stat_summary(fun.y=median,geom="point",fill="white",shape=21,size=2.5)
+```
+
+## Summary:
+
+-   The box-whisker plot uses five number summary to visualise the shape of the distribution of continuous variable. The five number summary is: min,max,median and first and third quartile of the data..
+-   The outliers in the data are shown as dots outside the length of whiskers.
+-   box-whisker plots are plotted using `geom_box` gemoetric object
+-   box-whisker plots does not show the summary of the data. if we want to see the data distribution along with the summary statistics of the box-plot, we will use violine plots.
+-   Violine plots are plotted using `geom_violin` gemoetric object
+-   typically, Violine plots also have narrow box plots overlaid
