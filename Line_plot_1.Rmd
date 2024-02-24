@@ -1,0 +1,88 @@
+---
+title: "Line chart with ggplot2"
+author: "Siddharth"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+A line chart represents a series of data points connected by a straight line, with the x-axis representing time and the y-axis representing the data value.
+
+## Load the Packages
+
+```{r}
+
+
+```
+
+## Load the Data-set
+
+```{r}
+
+
+```
+
+## Wrangle the data
+
+```{r}
+
+
+```
+
+## Plot the line chart
+
+```{r}
+
+
+```
+
+## Transform the data
+
+```{r}
+
+
+```
+
+## Plot line chart with color aesthetics
+
+```{r}
+
+
+```
+
+## Change line chart appearance with data point
+
+```{r}
+
+```
+
+## Draw area chart
+
+```{r}
+
+
+```
+
+## Add confidence region to line chart
+
+```{r}
+
+
+```
+
+# Summary:
+
+-   Line plots are widely used to visualize the time series data.
+
+-   line chart represents a series of data points connected by a straight line, with the x-axis representing time and the y-axis representing the data value.
+
+-   We used `geom_line()` object to plot the line chart
+
+-   We used some handy functions from `lubridate` package.. such as `dmy()` function to convert the `character` date type into `date` data type.
+
+-   We also used color aesthetics to differentiate the time series for 3 years.
+
+-   We can convert line chart into area chart using `geom_area()` object
+
+-   We used `geom_point()` aesthetics to change the appearance of points
+
+-   Finally, we used `geom_ribbon()` object to show the confidence region around the line chart..
