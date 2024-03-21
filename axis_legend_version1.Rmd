@@ -1,0 +1,90 @@
+---
+title: "Axis, Legends and Annotations"
+output: html_document
+date: "2024-03-16"
+---
+
+### Introduction:
+
+When constructing a data visualization, it is often necessary to make annotations to the data displayed. Annotations are nothing but the meta-data for the plot. They provide additional contextual information to the plot such as:
+
+ - Char title
+ - Axis labels
+ - Text labels to the graph
+ - Legends
+ - Axis tick mark labels and their placements
+ - Colors in plots
+
+### Load the libraries
+
+We will work on `gapminder` data, hence loading `gapminder` and `tidyverse` library.
+```{r}
+
+library(tidyverse)
+library(gapminder)
+
+```
+
+### Display the data
+```{r}
+head(gapminder)
+```
+
+### Add Annotation to scatter plot
+
+```{r}
+
+```
+
+### Remove the overlap of Annotated text
+
+```{r}
+
+```
+
+### Annotate the outliers
+
+```{r}
+
+```
+
+### Change the legend title
+
+```{r}
+
+```
+
+### Changing the Axis labels
+
+```{r}
+
+```
+
+### Add plot title 
+
+```{r}
+
+```
+
+### Change the axis tick scales
+
+```{r}
+
+```
+
+### Rotate the axis tick labels
+
+```{r}
+
+```
+
+### Add different color palette to the chart
+
+```{r}
+
+```
+
+
+
+
+
